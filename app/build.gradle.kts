@@ -8,6 +8,12 @@ plugins {
     id("com.github.ben-manes.versions") version "0.50.0"
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
 group = "hexlet.code"
 version = "1.0-SNAPSHOT"
 
