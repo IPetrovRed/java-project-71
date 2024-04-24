@@ -56,19 +56,19 @@ public class DifferTest {
         assertThat(result).isEqualTo(resultPlain);
     }
 
-//    @Test
-//    @DisplayName("JSON compare to JSON")
-//    public void testJSONtoJson() throws Exception {
-//        String result = Differ.generate(PATH_TO_FILE_0, PATH_TO_FILE_1, "json");
-//        assertThat(result).isEqualTo(resultJson);
-//    }
-//
-//    @Test
-//    @DisplayName("YAML compare to JSON")
-//    public void testYMLtoJson() throws Exception {
-//        String result = Differ.generate(PATH_TO_FILE_2, PATH_TO_FILE_3, "json");
-//        assertThat(result).isEqualTo(resultJson);
-//    }
+    @Test
+    @DisplayName("JSON compare to JSON")
+    public void testJSONtoJson() throws Exception {
+        String result = Differ.generate(PATH_TO_FILE_0, PATH_TO_FILE_1, "json");
+        assertThat(result).isEqualTo(resultJson);
+    }
+
+    @Test
+    @DisplayName("YAML compare to JSON")
+    public void testYMLtoJson() throws Exception {
+        String result = Differ.generate(PATH_TO_FILE_2, PATH_TO_FILE_3, "json");
+        assertThat(result).isEqualTo(resultJson);
+    }
 
     @Test
     @DisplayName("Generate default result on files")
