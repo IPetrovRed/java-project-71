@@ -11,10 +11,10 @@ public class PlainFormatter {
             switch (diff.get("type").toString()) {
                 case "equals":
                     break;
-                case "deleted":
+                case "removed":
                     result.append("Property '")
                             .append(diff.get("key"))
-                            .append("' was deleted")
+                            .append("' was removed")
                             .append("\n");
                     break;
                 case "added":
@@ -24,10 +24,10 @@ public class PlainFormatter {
                             .append(checkValue(diff.get("newValue")))
                             .append("\n");
                     break;
-                case "changed":
+                case "updated":
                     result.append("Property '")
                             .append(diff.get("key"))
-                            .append("' was changed. From ")
+                            .append("' was updated. From ")
                             .append(checkValue(diff.get("oldValue")))
                             .append(" to ")
                             .append(checkValue(diff.get("newValue")))

@@ -18,7 +18,7 @@ public class TreeBuilder {
             if (map1.containsKey(key) && !map2.containsKey(key)) {
                 map.put("key", key);
                 map.put("oldValue", map1.get(key));
-                map.put("type", "deleted");
+                map.put("type", "removed");
             } else if (!map1.containsKey(key) && map2.containsKey(key)) {
                 map.put("key", key);
                 map.put("newValue", map2.get(key));
@@ -27,7 +27,7 @@ public class TreeBuilder {
                 map.put("key", key);
                 map.put("oldValue", map1.get(key));
                 map.put("newValue", map2.get(key));
-                map.put("type", "changed");
+                map.put("type", "updated");
             } else {
                 map.put("key", key);
                 map.put("oldValue", map1.get(key));

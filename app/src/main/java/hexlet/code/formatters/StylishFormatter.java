@@ -8,7 +8,7 @@ public class StylishFormatter {
         StringBuilder result = new StringBuilder("{\n");
         for (Map<String, Object> diff : differences) {
             switch (diff.get("type").toString()) {
-                case "deleted":
+                case "removed":
                     result.append("  - ")
                             .append(diff.get("key"))
                             .append(": ")
