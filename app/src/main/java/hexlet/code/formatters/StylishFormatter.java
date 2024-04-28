@@ -29,7 +29,7 @@ public class StylishFormatter {
                             .append(diff.get("oldValue"))
                             .append("\n");
                     break;
-                default:
+                case "updated":
                     result.append("  - ")
                             .append(diff.get("key"))
                             .append(": ")
@@ -41,6 +41,8 @@ public class StylishFormatter {
                             .append(diff.get("newValue"))
                             .append("\n");
                     break;
+                default:
+                    throw new RuntimeException("Unknown difference type:  " + differences);
             }
         }
         return result.append("}").toString();

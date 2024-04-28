@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 
 public class DifferTest {
 
-    private static final String PATH_TO_FILE_0 = "./src/test/resources/fix/file1.json";
-    private static final String PATH_TO_FILE_1 = "./src/test/resources/fix/file2.json";
-    private static final String PATH_TO_FILE_2 = "./src/test/resources/fix/file1.yml";
-    private static final String PATH_TO_FILE_3 = "./src/test/resources/fix/file2.yml";
+    private static final String PATH_TO_FILE_0 = "./src/test/resources/fixtures/file1.json";
+    private static final String PATH_TO_FILE_1 = "./src/test/resources/fixtures/file2.json";
+    private static final String PATH_TO_FILE_2 = "./src/test/resources/fixtures/file1.yml";
+    private static final String PATH_TO_FILE_3 = "./src/test/resources/fixtures/file2.yml";
 
     private static String resultStylish;
     private static String resultPlain;
@@ -23,9 +23,9 @@ public class DifferTest {
 
     @BeforeEach
     public final void beforeEach() throws Exception {
-        resultStylish = Differ.getData("./src/test/resources/fix/result_stylish.txt");
-        resultPlain = Differ.getData("./src/test/resources/fix/result_plain.txt");
-        resultJson = Differ.getData("./src/test/resources/fix/result_json.json");
+        resultStylish = Differ.getData("./src/test/resources/fixtures/result_stylish.txt");
+        resultPlain = Differ.getData("./src/test/resources/fixtures/result_plain.txt");
+        resultJson = Differ.getData("./src/test/resources/fixtures/result_json.json");
     }
 
     @Test

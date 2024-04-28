@@ -28,12 +28,15 @@ public class TreeBuilder {
                 map.put("oldValue", map1.get(key));
                 map.put("newValue", map2.get(key));
                 map.put("type", "updated");
-            } else {
+            } else if (Objects.equals(map1.get(key), map2.get(key))) {
                 map.put("key", key);
                 map.put("oldValue", map1.get(key));
                 map.put("type", "equals");
+            } else {
+                throw new RuntimeException("Unknown key type:  " + key);
             }
             result.add(map);
+
         }
         return result;
     }

@@ -18,7 +18,7 @@ public class Parser {
                 objectMapper = new ObjectMapper(new YAMLFactory());
                 break;
             default:
-                throw new RuntimeException("Unknown format");
+                throw new RuntimeException("Unknown format type: " + formatType);
         }
         return objectMapper.readValue(data, new TypeReference<Map<String, Object>>() { });
     }

@@ -34,7 +34,7 @@ public class PlainFormatter {
                             .append("\n");
                     break;
                 default:
-                    throw new RuntimeException("Unknown difference");
+                    throw new RuntimeException("Unknown difference type:  " + differences);
             }
         }
         return result.toString().trim();
