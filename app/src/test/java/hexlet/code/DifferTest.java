@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class DifferTest {
+public final class DifferTest {
 
     private static final Path PATH_TO_FILE_1 = Paths.get("./src/test/resources/fixtures/file1.json")
             .toAbsolutePath()
@@ -34,7 +34,7 @@ public class DifferTest {
     private static String resultJson;
 
     @BeforeEach
-    public final void beforeEach() throws Exception {
+    public void beforeEach() throws Exception {
         resultStylish = Differ.getData("./src/test/resources/fixtures/result_stylish.txt");
         resultPlain = Differ.getData("./src/test/resources/fixtures/result_plain.txt");
         resultJson = Differ.getData("./src/test/resources/fixtures/result_json.json");
