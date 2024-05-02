@@ -7,19 +7,31 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class DifferTest {
 
-    private static final String PATH_TO_FILE_0 = "./src/test/resources/fixtures/file1.json";
-    private static final String PATH_TO_FILE_1 = "./src/test/resources/fixtures/file2.json";
-    private static final String PATH_TO_FILE_2 = "./src/test/resources/fixtures/file1.yml";
-    private static final String PATH_TO_FILE_3 = "./src/test/resources/fixtures/file2.yml";
+    private static final Path PATH_TO_FILE_1 = Paths.get("./src/test/resources/fixtures/file1.json")
+            .toAbsolutePath()
+            .normalize();
+    private static final Path PATH_TO_FILE_2 = Paths.get("./src/test/resources/fixtures/file2.json")
+            .toAbsolutePath()
+            .normalize();
+    private static final Path PATH_TO_FILE_3 = Paths.get("./src/test/resources/fixtures/file1.yml")
+            .toAbsolutePath()
+            .normalize();
+    private static final Path PATH_TO_FILE_4 = Paths.get("./src/test/resources/fixtures/file2.yml")
+            .toAbsolutePath()
+            .normalize();
 
     private static String resultStylish;
     private static String resultPlain;
     private static String resultJson;
-
 
     @BeforeEach
     public final void beforeEach() throws Exception {
@@ -28,73 +40,49 @@ public class DifferTest {
         resultJson = Differ.getData("./src/test/resources/fixtures/result_json.json");
     }
 
-    @Test
-    @DisplayName("JSON test stylish")
-    public void testJSONtoStylish() throws Exception {
-        String result = Differ.generate(PATH_TO_FILE_0, PATH_TO_FILE_1, "stylish");
-        assertThat(result).isEqualTo(resultStylish);
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yml"})
+    @DisplayName("Test stylish format")
+    public void testStylishFormat(String format) throws Exception {
+        Path filePath1 = Paths.get("./src/test/resources/fixtures/file1." + format).toAbsolutePath().normalize();
+        Path filePath2 = Paths.get("./src/test/resources/fixtures/file2." + format).toAbsolutePath().normalize();
+        assertThat(Differ.generate(filePath1.toString(), filePath2.toString(), "stylish")).isEqualTo(resultStylish);
     }
 
-    @Test
-    @DisplayName("YAML test stylish")
-    public void testYMLtoStylish2() throws Exception {
-        String result = Differ.generate(PATH_TO_FILE_2, PATH_TO_FILE_3, "stylish");
-        assertThat(result).isEqualTo(resultStylish);
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yml"})
+    @DisplayName("Test plain format")
+    public void testPlainFormat(String format) throws Exception {
+        Path filePath1 = Paths.get("./src/test/resources/fixtures/file1." + format).toAbsolutePath().normalize();
+        Path filePath2 = Paths.get("./src/test/resources/fixtures/file2." + format).toAbsolutePath().normalize();
+        assertThat(Differ.generate(filePath1.toString(), filePath2.toString(), "plain")).isEqualTo(resultPlain);
     }
 
-    @Test
-    @DisplayName("JSON test plain")
-    public void testJSONtoPlain() throws Exception {
-        String result = Differ.generate(PATH_TO_FILE_0, PATH_TO_FILE_1, "plain");
-        assertThat(result).isEqualTo(resultPlain);
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yml"})
+    @DisplayName("Test json format")
+    public void testJsonFormat(String format) throws Exception {
+        Path filePath1 = Paths.get("./src/test/resources/fixtures/file1." + format).toAbsolutePath().normalize();
+        Path filePath2 = Paths.get("./src/test/resources/fixtures/file2." + format).toAbsolutePath().normalize();
+        assertThat(Differ.generate(filePath1.toString(), filePath2.toString(), "json")).isEqualTo(resultJson);
     }
 
-    @Test
-    @DisplayName("YAML test plain")
-    public void testYMLtoPlain() throws Exception {
-        String result = Differ.generate(PATH_TO_FILE_2, PATH_TO_FILE_3, "plain");
-        assertThat(result).isEqualTo(resultPlain);
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yml"})
+    @DisplayName("Test default format")
+    public void testDefaultFormat(String format) throws Exception {
+        Path filePath1 = Paths.get("./src/test/resources/fixtures/file1." + format).toAbsolutePath().normalize();
+        Path filePath2 = Paths.get("./src/test/resources/fixtures/file2." + format).toAbsolutePath().normalize();
+        String result = Differ.generate(filePath1.toString(), filePath2.toString());
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
     }
 
-    @Test
-    @DisplayName("JSON compare to JSON")
-    public void testJSONtoJson() throws Exception {
-        String result = Differ.generate(PATH_TO_FILE_0, PATH_TO_FILE_1, "json");
-        assertThat(result).isEqualTo(resultJson);
-    }
-
-    @Test
-    @DisplayName("YAML compare to JSON")
-    public void testYMLtoJson() throws Exception {
-        String result = Differ.generate(PATH_TO_FILE_2, PATH_TO_FILE_3, "json");
-        assertThat(result).isEqualTo(resultJson);
-    }
-
-    @Test
-    @DisplayName("Generate default result on files")
-    public void testGenerateDefault() throws Exception {
-        String result1 = Differ.generate(PATH_TO_FILE_0, PATH_TO_FILE_1);
-        String result2 = Differ.generate(PATH_TO_FILE_2, PATH_TO_FILE_3);
-        assertThat(result1).isEqualTo(resultStylish);
-        assertThat(result2).isEqualTo(resultStylish);
-    }
-
-    @Test
-    @DisplayName("Generate default result on empty files")
-    public void testGenerate() throws Exception {
-        String result1 = Differ.generate(PATH_TO_FILE_0, PATH_TO_FILE_1);
-        String result2 = Differ.generate(PATH_TO_FILE_2, PATH_TO_FILE_3);
-        assertNotNull(result1);
-        assertNotNull(result2);
-        assertFalse(result1.isEmpty());
-        assertFalse(result2.isEmpty());
-    }
-
-    @Test
-    @DisplayName("File type get test")
-    public void testGetFileType() {
-        String expectedType = "json";
-        String actualType = Differ.getDataFormat(PATH_TO_FILE_0);
-        assertEquals(expectedType, actualType);
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yml"})
+    @DisplayName("Test get file type")
+    public void testGetFileType(String format) {
+        String filePath = "./src/test/resources/fixtures/file1." + format;
+        assertEquals(format, Differ.getDataFormat(filePath));
     }
 }
